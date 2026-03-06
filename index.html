@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IB Physics Revision Builder — SL and HL</title>
+  <style>
+    :root{
+      --bg:#f6f8fc;
+      --card:#ffffff;
+      --ink:#1f2937;
+      --muted:#6b7280;
+      --line:#d7deea;
+      --accent:#2563eb;
+      --accent-soft:#eaf1ff;
+      --good:#e7f8ec;
+      --bad:#fdeaea;
+      --warn:#fff4d8;
+      --sl:#0f766e;
+      --sl-soft:#dff7f3;
+      --hl:#7c3aed;
+      --hl-soft:#f3e8ff;
+      --core:#b45309;
+      --core-soft:#fff1df;
+      --code:#f7f9fd;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:Arial, Helvetica, sans-serif;
+      background:var(--bg);
+      color:var(--ink);
+      line-height:1.5;
+    }
+    header{
+      background:linear-gradient(135deg,#163d84,#2563eb);
+      color:#fff;
+      padding:28px 20px;
+    }
+    header h1{margin:0 0 8px;font-size:2rem}
+    header p{margin:0;max-width:980px}
+    .wrap{
+      max-width:1240px;
+      margin:0 auto;
+      padding:22px;
+    }
+    .toolbar{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-bottom:18px;
+      align-items:center;
+    }
+    .toolbar button,.toolbar select,.toolbar input{
+      padding:10px 12px;
+      border-radius:10px;
+      border:1px solid var(--line);
+      background:#fff;
+      font-size:0.95rem;
+    }
+    .toolbar button{
+      background:var(--accent);
+      border:none;
+      color:white;
+      font-weight:700;
+      cursor:pointer;
+    }
+    .layout{
+      display:grid;
+      grid-template-columns:320px 1fr;
+      gap:18px;
+    }
+    .sidebar,.main{
+      display:flex;
+      flex-direction:column;
+      gap:18px;
+    }
+    .card{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:18px;
+      box-shadow:0 3px 12px rgba(15,35,70,0.04);
+    }
+    .card h2,.card h3{margin-top:0}
+    .small{
+      color:var(--muted);
+      font-size:0.94rem;
+    }
+    .pill{
+      display:inline-block;
+      border-radius:999px;
+      padding:4px 10px;
+      margin:3px 6px 3px 0;
+      font-size:0.8rem;
+      font-weight:700;
+      border:1px solid var(--line);
+      background:#fff;
+    }
+    .sl{background:var(--sl-soft); color:var(--sl); border-color:#9dd9d2;}
+    .hl{background:var(--hl-soft); color:var(--hl); border-color:#d8b4fe;}
+    .core{background:var(--core-soft); color:var(--core); border-color:#f5c793;}
+    .mode-tabs{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-bottom:10px;
+    }
+    .mode-tab{
+      padding:8px 12px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:#fff;
+      cursor:pointer;
+      font-weight:700;
+    }
+    .mode-tab.active{
+      background:var(--accent);
+      color:#fff;
+      border-color:var(--accent);
+    }
+    .question-card{
+      border-top:1px solid var(--line);
+      padding-top:16px;
+      margin-top:16px;
+    }
+    .question-card:first-child{
+      border-top:none;
+      padding-top:0;
+      margin-top:0;
+    }
+    .marks{
+      color:var(--accent);
+      font-weight:700;
+      font-size:0.9rem;
+    }
+    textarea{
+      width:100%;
+      min-height:120px;
+      resize:vertical;
+      border:1px solid var(--line);
+      border-radius:12px;
+      padding:12px;
+      font:inherit;
+      margin-top:8px;
+      background:#fcfdff;
+    }
+    .controls{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top:10px;
+    }
+    .controls button{
+      padding:9px 12px;
+      border:none;
+      border-radius:10px;
+      background:var(--accent);
+      color:#fff;
+      font-weight:700;
+      cursor:pointer;
+    }
+    .answer{
+      display:none;
+      margin-top:10px;
+      padding:12px;
+      border-radius:12px;
+      background:var(--good);
+      border:1px solid #bfe5c8;
+    }
+    .hint{
+      background:var(--warn);
+      border:1px solid #ead9a7;
+      border-radius:12px;
+      padding:10px 12px;
+      margin:10px 0;
+    }
+    .code{
+      background:var(--code);
+      border:1px solid var(--line);
+      border-radius:12px;
+      padding:12px;
+      margin-top:10px;
+      overflow:auto;
+    }
+    pre{
+      margin:0;
+      white-space:pre-wrap;
+      font-family:Consolas, Monaco, monospace;
+      font-size:0.94rem;
+    }
+    .mcq-options{
+      display:grid;
+      gap:10px;
+      margin-top:12px;
+    }
+    .mcq-option{
+      border:1px solid var(--line);
+      background:#fff;
+      border-radius:12px;
+      padding:12px;
+      cursor:pointer;
+    }
+    .mcq-option.selected{
+      outline:2px solid var(--accent);
+      background:#f8fbff;
+    }
+    .mcq-option.correct{
+      background:var(--good);
+      border-color:#8fd29f;
+    }
+    .mcq-option.incorrect{
+      background:var(--bad);
+      border-color:#f1aaaa;
+    }
+    .stats{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+    }
+    .stat{
+      background:#f8fbff;
+      border:1px solid var(--line);
+      border-radius:12px;
+      padding:12px;
+    }
+    .big{
+      font-size:1.4rem;
+      font-weight:700;
+      color:var(--accent);
+    }
+    ul{margin:8px 0 0 18px}
+    table{
+      width:100%;
+      border-collapse:collapse;
+      margin-top:10px;
+    }
+    th,td{
+      border:1px solid var(--line);
+      padding:8px;
+      text-align:left;
+      vertical-align:top;
+    }
+    @media (max-width: 930px){
+      .layout{grid-template-columns:1fr}
+      .stats{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>IB Physics Revision Builder — SL and HL</h1>
+    <p>
+      Notes, short-answer practice, MCQs, answer reveals, mark tracking, and level filters.
+      Core material and HL extension are clearly separated.
+    </p>
+  </header>
+
+  <div class="wrap">
+    <div class="toolbar">
+      <button onclick="nextRandomQuestion()">Random item</button>
+      <button onclick="toggleAllAnswers()">Toggle all short-answer answers</button>
+      <button onclick="resetProgress()">Reset progress</button>
+      <input id="studentName" type="text" placeholder="Student name">
+      <select id="levelFilter" onchange="renderAll()">
+        <option value="all">Show all: Core + SL + HL</option>
+        <option value="core">Core only</option>
+        <option value="sl">SL only</option>
+        <option value="hl">HL only</option>
+      </select>
+      <select id="topicFilter" onchange="renderAll()">
+        <option value="all">All topics</option>
+        <option value="mechanics">Mechanics / work-energy / momentum</option>
+        <option value="gravitation">Gravitation / orbital motion</option>
+        <option value="waves">Waves / sound / interference</option>
+        <option value="fields">Electric and magnetic fields</option>
+        <option value="thermal">Thermal physics / gases</option>
+        <option value="circuits">Circuits</option>
+        <option value="nuclear">Nuclear / quantum</option>
+        <option value="hl_extension">HL extension</option>
+      </select>
+    </div>
+
+    <div class="layout">
+      <aside class="sidebar">
+        <div class="card">
+          <h2>Mode</h2>
+          <div class="mode-tabs">
+            <button class="mode-tab active" id="tab-notes" onclick="setMode('notes')">Notes</button>
+            <button class="mode-tab" id="tab-short" onclick="setMode('short')">Short answer</button>
+            <button class="mode-tab" id="tab-mcq" onclick="setMode('mcq')">MCQ</button>
+          </div>
+          <p class="small">Switch between guided notes, structured-answer practice, and quick multiple-choice revision.</p>
+        </div>
+
+        <div class="card">
+          <h2>Legend</h2>
+          <span class="pill core">Core / common to both papers</span>
+          <span class="pill sl">SL-focused practice</span>
+          <span class="pill hl">HL extension</span>
+          <p class="small">The attached papers show a substantial shared core, with extra HL-only topics layered on top. </p>
+        </div>
+
+        <div class="card">
+          <h2>Scoreboard</h2>
+          <div class="stats">
+            <div class="stat">
+              <div class="small">MCQs answered</div>
+              <div class="big" id="mcqAnswered">0</div>
+            </div>
+            <div class="stat">
+              <div class="small">MCQs correct</div>
+              <div class="big" id="mcqCorrect">0</div>
+            </div>
+            <div class="stat">
+              <div class="small">Short answers opened</div>
+              <div class="big" id="answersOpened">0</div>
+            </div>
+            <div class="stat">
+              <div class="small">Items visible</div>
+              <div class="big" id="questionsVisible">0</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>Coverage</h2>
+          <span class="pill core">force–distance graphs</span>
+          <span class="pill core">orbital motion</span>
+          <span class="pill core">sound / interference</span>
+          <span class="pill core">electric fields</span>
+          <span class="pill core">circuits</span>
+          <span class="pill core">binding energy</span>
+          <span class="pill core">projectiles</span>
+          <span class="pill core">ideal gases</span>
+          <span class="pill hl">Rutherford scattering</span>
+          <span class="pill hl">nuclear radius</span>
+          <span class="pill hl">decay constant detail</span>
+          <span class="pill hl">discrete nuclear energy levels</span>
+          <span class="pill hl">microstates / probability</span>
+          <span class="pill hl">Doppler extension</span>
+        </div>
+
+        <div class="card">
+          <h2>Exam tips</h2>
+          <div class="hint">
+            For “show that”, set up the equation clearly and substitute values.  
+            For “outline”, give the main physical reason.  
+            For “explain”, link the physics principle to the specific situation.
+          </div>
+        </div>
+      </aside>
+
+      <main class="main">
+        <div class="card">
+          <h2 id="modeTitle">Physics notes</h2>
+          <div id="questionContainer"></div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script>
+    const notesBlocks = [
+      {
+        id:"n1", level:"core", topic:"mechanics", title:"Force–distance graphs and work",
+        html: `
+          <p>The area under a force–distance graph represents <strong>work done</strong>.</p>
+          <p>If the object starts from rest, the work done can be equated to the change in kinetic energy:</p>
+          <div class="code"><pre>W = ΔE_k = 1/2 mv²</pre></div>
+        `
+      },
+      {
+        id:"n2", level:"core", topic:"gravitation", title:"Orbital motion and gravitation",
+        html: `
+          <p>Kepler-style orbital data can be used to compare orbital radii and periods.</p>
+          <p>For bodies orbiting the same central mass:</p>
+          <div class="code"><pre>T² ∝ r³</pre></div>
+          <p>This lets you compare planets or estimate the mass of the Sun using orbital radius and period. </p>
+        `
+      },
+      {
+        id:"n3", level:"core", topic:"waves", title:"Interference and sound",
+        html: `
+          <p>Destructive interference occurs when two waves arrive out of phase by half a wavelength (or an odd multiple of half a wavelength).</p>
+          <p>For sound in air:</p>
+          <div class="code"><pre>λ = v / f</pre></div>
+        `
+      },
+      {
+        id:"n4", level:"core", topic:"fields", title:"Uniform electric fields",
+        html: `
+          <p>Between parallel plates:</p>
+          <div class="code"><pre>E = V / d</pre></div>
+          <p>An electron accelerates opposite to the electric field direction because it is negatively charged. In a combined electric and magnetic field, undeflected motion means the electric and magnetic forces balance. </p>
+        `
+      },
+      {
+        id:"n5", level:"core", topic:"circuits", title:"Power and resistance",
+        html: `
+          <p>Useful equations:</p>
+          <div class="code"><pre>P = IV
+P = I²R
+P = V²/R</pre></div>
+          <p>Series and parallel arrangements change current, voltage, and power distribution in predictable ways. :contentReference[oaicite:4]{index=4}</p>
+        `
+      },
+      {
+        id:"n6", level:"core", topic:"nuclear", title:"Binding energy and stability",
+        html: `
+          <p>Binding energy is the energy required to completely separate the nucleons in a nucleus, or equivalently the energy released when the nucleus is assembled.</p>
+          <p>Greater binding energy per nucleon generally means greater stability. :contentReference[oaicite:5]{index=5}</p>
+        `
+      },
+      {
+        id:"n7", level:"core", topic:"thermal", title:"Ideal gases and kinetic theory",
+        html: `
+          <p>For an ideal gas:</p>
+          <div class="code"><pre>pV = nRT</pre></div>
+          <p>If a gas behaves ideally at constant temperature, then pV remains constant.</p>
+        `
+      },
+      {
+        id:"n8", level:"sl", topic:"mechanics", title:"SL emphasis: projectiles and collisions",
+        html: `
+          <p>The SL papers emphasize projectile motion, momentum, and collisions, including drawing free-body diagrams and using conservation of momentum. </p>
+        `
+      },
+      {
+        id:"n9", level:"sl", topic:"waves", title:"SL emphasis: refraction and heating / circuits",
+        html: `
+          <p>The SL papers also place strong emphasis on wave behavior at boundaries, simple interference setups, ideal gases, and practical electricity questions such as heater design and lamp I–V graphs. :contentReference[oaicite:7]{index=7}</p>
+        `
+      },
+      {
+        id:"n10", level:"hl", topic:"hl_extension", title:"HL extension: Rutherford scattering",
+        html: `
+          <p>HL adds nuclear scattering ideas beyond the SL core. When alpha particles have sufficiently high energy, they probe distances comparable to the nuclear radius, so simple Rutherford scattering predictions break down. This allows an estimate of nuclear size. :contentReference[oaicite:8]{index=8}</p>
+        `
+      },
+      {
+        id:"n11", level:"hl", topic:"hl_extension", title:"HL extension: microstates and probability",
+        html: `
+          <p>HL also adds thermodynamic-statistical reasoning. A macrostate with more possible microstates is more probable, so isolated systems tend to evolve toward configurations with more microstates. :contentReference[oaicite:9]{index=9}</p>
+        `
+      },
+      {
+        id:"n12", level:"hl", topic:"hl_extension", title:"HL extension: discrete nuclear energy levels",
+        html: `
+          <p>Distinct gamma frequencies imply distinct photon energies, so the nucleus can only transition between specific allowed energy levels. That is evidence that nuclear energy levels are discrete. :contentReference[oaicite:10]{index=10}</p>
+        `
+      }
+    ];
+
+    const shortQuestions = [
+      {
+        id:"sa1", level:"core", topic:"mechanics", marks:2,
+        q:"What is represented by the area under a force–distance graph?",
+        a:"The area under a force–distance graph represents the work done by the force. If the object starts from rest, this work equals the gain in kinetic energy."
+      },
+      {
+        id:"sa2", level:"core", topic:"mechanics", marks:3,
+        q:"A force–distance graph gives the work done on a car. Explain how this can be used to find the final speed of a car that starts from rest.",
+        a:"First calculate the area under the graph to find the work done. Then use the work–energy principle: work done equals change in kinetic energy. Since the car starts from rest, W = 1/2 mv², so the final speed can be found from v = √(2W/m)."
+      },
+      {
+        id:"sa3", level:"core", topic:"gravitation", marks:3,
+        q:"Explain how observations of planetary motion can be used to determine the mass of the Sun.",
+        a:"The orbital period and orbital radius of a planet can be measured from observations. Using circular motion and gravitation, or Kepler’s third law in Newtonian form, these values can be related to the mass of the Sun. Rearranging the equation allows the Sun’s mass to be calculated."
+      },
+      {
+        id:"sa4", level:"core", topic:"waves", marks:3,
+        q:"Outline why sound at a detector may undergo destructive interference when it arrives by a direct path and a reflected path.",
+        a:"The two sound waves travel different distances, so they may arrive with a path difference equal to half a wavelength or an odd multiple of half a wavelength. In that case they are out of phase and interfere destructively, reducing the detected intensity."
+      },
+      {
+        id:"sa5", level:"core", topic:"waves", marks:2,
+        q:"State one difference between sound waves and electromagnetic waves other than longitudinal/transverse.",
+        a:"Sound waves require a medium to travel, whereas electromagnetic waves can travel through a vacuum."
+      },
+      {
+        id:"sa6", level:"core", topic:"fields", marks:3,
+        q:"Explain why an electron between parallel charged plates accelerates toward the positive plate.",
+        a:"The electric field points from the positive plate to the negative plate. Because the electron has negative charge, the electric force on it acts opposite to the field direction. Therefore it accelerates toward the positive plate."
+      },
+      {
+        id:"sa7", level:"core", topic:"fields", marks:3,
+        q:"What condition must be satisfied for an electron to pass undeflected through crossed electric and magnetic fields?",
+        a:"The electric force and magnetic force must be equal in magnitude and opposite in direction. This gives qE = qvB, so E = vB and therefore v = E/B."
+      },
+      {
+        id:"sa8", level:"core", topic:"circuits", marks:3,
+        q:"Explain why power dissipation differs for two resistors in series and in parallel.",
+        a:"In series, the current through both resistors is the same, so power depends on P = I²R. The resistor with greater resistance dissipates more power. In parallel, the potential difference across each resistor is the same, so power depends on P = V²/R. The resistor with smaller resistance dissipates more power."
+      },
+      {
+        id:"sa9", level:"core", topic:"nuclear", marks:3,
+        q:"What is meant by the binding energy of a nucleus?",
+        a:"The binding energy of a nucleus is the energy required to completely separate the nucleus into its constituent protons and neutrons. Equivalently, it is the energy released when the nucleus is assembled from free nucleons."
+      },
+      {
+        id:"sa10", level:"core", topic:"nuclear", marks:3,
+        q:"Explain why a larger binding energy per nucleon generally means greater nuclear stability.",
+        a:"A larger binding energy per nucleon means the nucleons are, on average, more tightly bound together. More energy would be needed to separate them, so the nucleus is more stable."
+      },
+      {
+        id:"sa11", level:"core", topic:"thermal", marks:3,
+        q:"Explain how a graph of pressure against volume can suggest whether a gas behaves ideally at constant temperature.",
+        a:"For an ideal gas at constant temperature, pV should remain constant. So by choosing pairs of points from the graph and checking whether the product pV stays approximately the same, we can judge whether the gas behaves ideally."
+      },
+      {
+        id:"sa12", level:"sl", topic:"mechanics", marks:4,
+        q:"Explain why some kinetic energy is lost in an inelastic collision such as a pellet embedding in a ball.",
+        a:"During an inelastic collision, work is done deforming the objects and overcoming internal forces. As a result, some of the initial kinetic energy is transformed into internal energy, thermal energy, and energy associated with deformation. Momentum is conserved, but kinetic energy is not."
+      },
+      {
+        id:"sa13", level:"sl", topic:"mechanics", marks:3,
+        q:"Describe the free-body diagram for a ball hanging at its maximum height after a collision.",
+        a:"The diagram should show two forces only: the tension acting along the string toward the pivot, and the weight acting vertically downward. These should be labeled clearly."
+      },
+      {
+        id:"sa14", level:"sl", topic:"nuclear", marks:3,
+        q:"What is meant by isotopes?",
+        a:"Isotopes are nuclei of the same element, so they have the same number of protons, but they have different numbers of neutrons."
+      },
+      {
+        id:"sa15", level:"sl", topic:"thermal", marks:3,
+        q:"Outline how kinetic theory relates observable gas properties to the motion of molecules.",
+        a:"Kinetic theory explains gas pressure as arising from molecules colliding with the walls of a container. Temperature is related to the average kinetic energy of the molecules. Macroscopic gas behavior is therefore explained in terms of the microscopic motion of particles."
+      },
+      {
+        id:"sa16", level:"hl", topic:"hl_extension", marks:4,
+        q:"Outline why Rutherford scattering breaks down for alpha particles of sufficiently high initial energy.",
+        a:"At low energies, alpha particles are mainly influenced by the Coulomb repulsion from the positively charged nucleus, so Rutherford’s model works well. At sufficiently high energies, the alpha particles can approach close enough for nuclear forces and finite nuclear size effects to matter. Then the simple point-charge Coulomb model is no longer adequate."
+      },
+      {
+        id:"sa17", level:"hl", topic:"hl_extension", marks:4,
+        q:"Explain how a threshold alpha-particle energy can be used to estimate the nuclear radius.",
+        a:"If an alpha particle with the threshold energy just reaches the distance of closest approach corresponding to the nuclear surface, its initial kinetic energy is converted into electrostatic potential energy at that point. By equating the initial kinetic energy to the electrostatic potential energy, the distance of closest approach can be estimated. This distance gives an estimate of the nuclear radius."
+      },
+      {
+        id:"sa18", level:"hl", topic:"hl_extension", marks:3,
+        q:"Explain how observed gamma frequencies provide evidence that nuclear energy levels are discrete.",
+        a:"Each emitted gamma photon has energy E = hf. If only certain frequencies are observed, then only certain photon energies are emitted. That means only certain energy differences between nuclear states are allowed, so the nuclear energy levels must be discrete rather than continuous."
+      },
+      {
+        id:"sa19", level:"hl", topic:"hl_extension", marks:4,
+        q:"Explain why an isolated system is more likely to evolve from a configuration with fewer microstates to one with more microstates.",
+        a:"A macrostate with more microstates can be realized in more distinct ways, so it has greater probability. Therefore, for an isolated system, evolution toward the macrostate with more microstates is statistically more likely than evolution toward one with fewer microstates."
+      },
+      {
+        id:"sa20", level:"hl", topic:"waves", marks:3,
+        q:"A detector hears a lower frequency than the source emits. State the detector’s direction of motion and explain briefly.",
+        a:"The detector is moving away from the source. For the Doppler effect, motion away increases the spacing of arriving wavefronts and reduces the detected frequency."
+      }
+    ];
+
+    const mcqQuestions = [
+      {
+        id:"m1", level:"core", topic:"mechanics",
+        q:"The area under a force–distance graph represents:",
+        options:["momentum","work done","power","impulse"],
+        correct:1,
+        explanation:"The area under an F–d graph equals work done."
+      },
+      {
+        id:"m2", level:"core", topic:"gravitation",
+        q:"For planets orbiting the same star, which relation applies?",
+        options:["T ∝ r²","T² ∝ r³","T ∝ 1/r","T² ∝ 1/r³"],
+        correct:1,
+        explanation:"Kepler’s third law for the same central mass gives T² ∝ r³."
+      },
+      {
+        id:"m3", level:"core", topic:"waves",
+        q:"Destructive interference occurs when the path difference is:",
+        options:["0","one wavelength","half a wavelength","two wavelengths"],
+        correct:2,
+        explanation:"A path difference of λ/2 gives destructive interference."
+      },
+      {
+        id:"m4", level:"core", topic:"fields",
+        q:"An electron in a uniform electric field accelerates:",
+        options:["in the direction of the field","opposite to the field","parallel to both plates only","not at all"],
+        correct:1,
+        explanation:"Because the electron is negatively charged, its force is opposite to the field direction."
+      },
+      {
+        id:"m5", level:"core", topic:"fields",
+        q:"For undeflected motion in crossed electric and magnetic fields:",
+        options:["E = B/v","E = vB","v = EB","B = Ev"],
+        correct:1,
+        explanation:"Balancing qE and qvB gives E = vB."
+      },
+      {
+        id:"m6", level:"core", topic:"circuits",
+        q:"For two resistors in series, the one with greater power dissipation has:",
+        options:["smaller resistance","greater resistance","same resistance","zero current"],
+        correct:1,
+        explanation:"In series the current is the same, so P = I²R."
+      },
+      {
+        id:"m7", level:"core", topic:"nuclear",
+        q:"Binding energy is:",
+        options:["the energy needed to ionize an atom","the energy required to separate all nucleons","the energy of a gamma photon only","the mass of the nucleus"],
+        correct:1,
+        explanation:"Binding energy is the energy needed to separate the nucleus into nucleons."
+      },
+      {
+        id:"m8", level:"core", topic:"thermal",
+        q:"If a gas behaves ideally at constant temperature, then:",
+        options:["p + V is constant","pV is constant","p/V is constant","p = V"],
+        correct:1,
+        explanation:"For an ideal gas at constant temperature, pV = constant."
+      },
+      {
+        id:"m9", level:"sl", topic:"mechanics",
+        q:"In an inelastic collision, which quantity is always conserved?",
+        options:["kinetic energy","temperature","momentum","power"],
+        correct:2,
+        explanation:"Momentum is conserved in collisions if external forces are negligible."
+      },
+      {
+        id:"m10", level:"sl", topic:"nuclear",
+        q:"Two isotopes of the same element have the same number of:",
+        options:["neutrons","protons","nucleons","electrons in the nucleus"],
+        correct:1,
+        explanation:"Isotopes have the same number of protons."
+      },
+      {
+        id:"m11", level:"hl", topic:"hl_extension",
+        q:"Rutherford scattering deviates at high alpha energy because:",
+        options:["the nucleus stops being charged","the finite size of the nucleus becomes important","electrons disappear","gravity dominates"],
+        correct:1,
+        explanation:"At high enough energy, alpha particles probe distances where nuclear size and strong-force effects matter."
+      },
+      {
+        id:"m12", level:"hl", topic:"hl_extension",
+        q:"Discrete gamma frequencies imply:",
+        options:["continuous nuclear energy levels","discrete nuclear energy levels","no nuclear transitions","constant half-life"],
+        correct:1,
+        explanation:"Specific photon frequencies correspond to specific allowed energy differences."
+      },
+      {
+        id:"m13", level:"hl", topic:"hl_extension",
+        q:"A macrostate with more microstates is:",
+        options:["less probable","more probable","impossible","always lower in total energy"],
+        correct:1,
+        explanation:"More microstates means more possible arrangements, so greater probability."
+      },
+      {
+        id:"m14", level:"hl", topic:"waves",
+        q:"A detector hears a lower frequency from a stationary loudspeaker. The detector is moving:",
+        options:["toward the source","away from the source","at right angles to the source","in a circle only"],
+        correct:1,
+        explanation:"Moving away reduces the detected frequency."
+      }
+    ];
+
+    let mode = "notes";
+    let mcqAnswered = 0;
+    let mcqCorrect = 0;
+    const openedAnswers = new Set();
+    const answeredMcq = new Set();
+
+    function setMode(newMode){
+      mode = newMode;
+      document.getElementById("tab-notes").classList.toggle("active", mode === "notes");
+      document.getElementById("tab-short").classList.toggle("active", mode === "short");
+      document.getElementById("tab-mcq").classList.toggle("active", mode === "mcq");
+      document.getElementById("modeTitle").textContent =
+        mode === "notes" ? "Physics notes" :
+        mode === "short" ? "Short-answer practice" :
+        "Multiple-choice practice";
+      renderAll();
+    }
+
+    function getLevelFilter(){ return document.getElementById("levelFilter").value; }
+    function getTopicFilter(){ return document.getElementById("topicFilter").value; }
+
+    function levelMatches(itemLevel, filter){
+      if(filter === "all") return true;
+      if(filter === "core") return itemLevel === "core";
+      if(filter === "sl") return itemLevel === "sl";
+      if(filter === "hl") return itemLevel === "hl";
+      return true;
+    }
+
+    function getFiltered(list){
+      const level = getLevelFilter();
+      const topic = getTopicFilter();
+      return list.filter(item =>
+        levelMatches(item.level, level) &&
+        (topic === "all" || item.topic === topic)
+      );
+    }
+
+    function renderAll(){
+      const container = document.getElementById("questionContainer");
+      container.innerHTML = "";
+
+      if(mode === "notes"){
+        const data = getFiltered(notesBlocks);
+        document.getElementById("questionsVisible").textContent = data.length;
+        if(data.length === 0){
+          container.innerHTML = "<p class='small'>No notes match the current filters.</p>";
+          updateStats();
+          return;
+        }
+        data.forEach(n => {
+          const div = document.createElement("div");
+          div.className = "question-card";
+          div.innerHTML = `
+            <div>
+              <span class="pill ${n.level === 'core' ? 'core' : n.level === 'sl' ? 'sl' : 'hl'}">
+                ${n.level === 'core' ? 'Core / SL+HL' : n.level.toUpperCase()}
+              </span>
+            </div>
+            <h3>${escapeHtml(n.title)}</h3>
+            ${n.html}
+          `;
+          container.appendChild(div);
+        });
+        updateStats();
+        return;
+      }
+
+      const data = mode === "short" ? getFiltered(shortQuestions) : getFiltered(mcqQuestions);
+      document.getElementById("questionsVisible").textContent = data.length;
+
+      if(data.length === 0){
+        container.innerHTML = "<p class='small'>No questions match the current filters.</p>";
+        updateStats();
+        return;
+      }
+
+      data.forEach(q => {
+        const div = document.createElement("div");
+        div.className = "question-card";
+        const badgeClass = q.level === "core" ? "core" : q.level === "sl" ? "sl" : "hl";
+        const badgeText = q.level === "core" ? "Core / SL+HL" : q.level.toUpperCase();
+
+        if(mode === "short"){
+          const answerHtml = q.a.includes("\n") ? `<div class="code"><pre>${escapeHtml(q.a)}</pre></div>` : escapeHtml(q.a);
+          div.innerHTML = `
+            <div><span class="pill ${badgeClass}">${badgeText}</span></div>
+            <p><strong>${q.id.toUpperCase()}.</strong> ${escapeHtml(q.q)} <span class="marks">[${q.marks}]</span></p>
+            <textarea placeholder="Write your answer here..."></textarea>
+            <div class="controls">
+              <button onclick="toggleAnswer('${q.id}')">Reveal model answer</button>
+            </div>
+            <div class="answer" id="ans-${q.id}">${answerHtml}</div>
+          `;
+        } else {
+          const options = q.options.map((opt, idx) => `
+            <div class="mcq-option" id="opt-${q.id}-${idx}" onclick="answerMcq('${q.id}', ${idx})">
+              <strong>${String.fromCharCode(65 + idx)}.</strong> ${escapeHtml(opt)}
+            </div>
+          `).join("");
+          div.innerHTML = `
+            <div><span class="pill ${badgeClass}">${badgeText}</span></div>
+            <p><strong>${q.id.toUpperCase()}.</strong> ${escapeHtml(q.q)}</p>
+            <div class="mcq-options">${options}</div>
+            <div class="answer" id="ans-${q.id}">
+              <strong>Correct answer:</strong> ${String.fromCharCode(65 + q.correct)}. ${escapeHtml(q.options[q.correct])}<br><br>
+              ${escapeHtml(q.explanation)}
+            </div>
+          `;
+        }
+
+        container.appendChild(div);
+      });
+
+      updateStats();
+    }
+
+    function toggleAnswer(id){
+      const el = document.getElementById(`ans-${id}`);
+      const isOpen = el.style.display === "block";
+      el.style.display = isOpen ? "none" : "block";
+      if(!isOpen) openedAnswers.add(id); else openedAnswers.delete(id);
+      updateStats();
+    }
+
+    function toggleAllAnswers(){
+      if(mode !== "short") return;
+      const answers = document.querySelectorAll(".answer");
+      const anyClosed = Array.from(answers).some(a => a.style.display !== "block");
+      answers.forEach(a => a.style.display = anyClosed ? "block" : "none");
+
+      if(anyClosed){
+        getFiltered(shortQuestions).forEach(q => openedAnswers.add(q.id));
+      } else {
+        getFiltered(shortQuestions).forEach(q => openedAnswers.delete(q.id));
+      }
+      updateStats();
+    }
+
+    function answerMcq(id, chosen){
+      if(answeredMcq.has(id)) return;
+      const q = mcqQuestions.find(x => x.id === id);
+      answeredMcq.add(id);
+      mcqAnswered++;
+
+      q.options.forEach((_, idx) => {
+        const el = document.getElementById(`opt-${id}-${idx}`);
+        if(idx === q.correct) el.classList.add("correct");
+        if(idx === chosen && idx !== q.correct) el.classList.add("incorrect");
+        if(idx === chosen) el.classList.add("selected");
+      });
+
+      if(chosen === q.correct) mcqCorrect++;
+      document.getElementById(`ans-${id}`).style.display = "block";
+      updateStats();
+    }
+
+    function nextRandomQuestion(){
+      const data =
+        mode === "notes" ? getFiltered(notesBlocks) :
+        mode === "short" ? getFiltered(shortQuestions) :
+        getFiltered(mcqQuestions);
+
+      if(data.length === 0) return;
+      const q = data[Math.floor(Math.random() * data.length)];
+      renderAll();
+      setTimeout(() => {
+        const cards = document.querySelectorAll(".question-card");
+        const idx = data.findIndex(x => x.id === q.id);
+        if(cards[idx]){
+          cards[idx].scrollIntoView({behavior:"smooth", block:"start"});
+          cards[idx].style.outline = "3px solid #2563eb";
+          setTimeout(() => cards[idx].style.outline = "", 1400);
+        }
+      }, 50);
+    }
+
+    function resetProgress(){
+      mcqAnswered = 0;
+      mcqCorrect = 0;
+      openedAnswers.clear();
+      answeredMcq.clear();
+      renderAll();
+    }
+
+    function updateStats(){
+      document.getElementById("mcqAnswered").textContent = mcqAnswered;
+      document.getElementById("mcqCorrect").textContent = mcqCorrect;
+      document.getElementById("answersOpened").textContent = openedAnswers.size;
+    }
+
+    function escapeHtml(str){
+      return str
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;");
+    }
+
+    renderAll();
+  </script>
+</body>
+</html>
