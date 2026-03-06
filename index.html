@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>IB Physics Revision Builder — SL and HL</title>
+  <title>IB Physics Revision Builder — Deeper SL / HL Edition</title>
   <style>
     :root{
       --bg:#f6f8fc;
@@ -30,7 +30,7 @@
       font-family:Arial, Helvetica, sans-serif;
       background:var(--bg);
       color:var(--ink);
-      line-height:1.5;
+      line-height:1.55;
     }
     header{
       background:linear-gradient(135deg,#163d84,#2563eb);
@@ -38,9 +38,9 @@
       padding:28px 20px;
     }
     header h1{margin:0 0 8px;font-size:2rem}
-    header p{margin:0;max-width:980px}
+    header p{margin:0;max-width:1000px}
     .wrap{
-      max-width:1240px;
+      max-width:1280px;
       margin:0 auto;
       padding:22px;
     }
@@ -67,7 +67,7 @@
     }
     .layout{
       display:grid;
-      grid-template-columns:320px 1fr;
+      grid-template-columns:330px 1fr;
       gap:18px;
     }
     .sidebar,.main{
@@ -82,11 +82,8 @@
       padding:18px;
       box-shadow:0 3px 12px rgba(15,35,70,0.04);
     }
-    .card h2,.card h3{margin-top:0}
-    .small{
-      color:var(--muted);
-      font-size:0.94rem;
-    }
+    .card h2,.card h3,.card h4{margin-top:0}
+    .small{color:var(--muted);font-size:0.94rem}
     .pill{
       display:inline-block;
       border-radius:999px;
@@ -175,6 +172,13 @@
       padding:10px 12px;
       margin:10px 0;
     }
+    .danger{
+      background:#fff1f2;
+      border:1px solid #fecdd3;
+      border-radius:12px;
+      padding:10px 12px;
+      margin:10px 0;
+    }
     .code{
       background:var(--code);
       border:1px solid var(--line);
@@ -241,6 +245,15 @@
       text-align:left;
       vertical-align:top;
     }
+    .eq{
+      font-family:Consolas, Monaco, monospace;
+      background:#f8fbff;
+      border:1px solid var(--line);
+      border-radius:10px;
+      padding:8px 10px;
+      display:inline-block;
+      margin:4px 6px 4px 0;
+    }
     @media (max-width: 930px){
       .layout{grid-template-columns:1fr}
       .stats{grid-template-columns:1fr}
@@ -249,10 +262,11 @@
 </head>
 <body>
   <header>
-    <h1>IB Physics Revision Builder — SL and HL</h1>
+    <h1>IB Physics Revision Builder — Deeper SL / HL Edition</h1>
     <p>
-      Notes, short-answer practice, MCQs, answer reveals, mark tracking, and level filters.
-      Core material and HL extension are clearly separated.
+      Structured around the 2025 IB Physics data booklet themes and the attached mock papers.
+      Core content is separated from HL extension, with richer notes, worked methods, misconceptions,
+      MCQs, and fuller short-answer reveals.
     </p>
   </header>
 
@@ -270,13 +284,13 @@
       </select>
       <select id="topicFilter" onchange="renderAll()">
         <option value="all">All topics</option>
-        <option value="mechanics">Mechanics / work-energy / momentum</option>
+        <option value="mechanics">Mechanics</option>
         <option value="gravitation">Gravitation / orbital motion</option>
-        <option value="waves">Waves / sound / interference</option>
-        <option value="fields">Electric and magnetic fields</option>
-        <option value="thermal">Thermal physics / gases</option>
+        <option value="waves">Waves</option>
+        <option value="fields">Fields and EM motion</option>
+        <option value="thermal">Thermal / gases</option>
         <option value="circuits">Circuits</option>
-        <option value="nuclear">Nuclear / quantum</option>
+        <option value="nuclear">Nuclear and quantum</option>
         <option value="hl_extension">HL extension</option>
       </select>
     </div>
@@ -290,15 +304,29 @@
             <button class="mode-tab" id="tab-short" onclick="setMode('short')">Short answer</button>
             <button class="mode-tab" id="tab-mcq" onclick="setMode('mcq')">MCQ</button>
           </div>
-          <p class="small">Switch between guided notes, structured-answer practice, and quick multiple-choice revision.</p>
+          <p class="small">Use Notes for depth, Short answer for exam language, MCQ for speed and retrieval.</p>
         </div>
 
         <div class="card">
           <h2>Legend</h2>
-          <span class="pill core">Core / common to both papers</span>
+          <span class="pill core">Core / common SL+HL</span>
           <span class="pill sl">SL-focused practice</span>
           <span class="pill hl">HL extension</span>
-          <p class="small">The attached papers show a substantial shared core, with extra HL-only topics layered on top. </p>
+          <p class="small">The data booklet separates standard+higher material from additional higher-level equations, especially in mechanics, relativity, fields, induction, and nuclear/quantum physics. </p>
+        </div>
+
+        <div class="card">
+          <h2>Data-booklet anchors</h2>
+          <div class="eq">W = Fs cosθ</div>
+          <div class="eq">E_k = ½mv²</div>
+          <div class="eq">g = GM/r²</div>
+          <div class="eq">E = V/d</div>
+          <div class="eq">F = qvB sinθ</div>
+          <div class="eq">pV = nRT</div>
+          <div class="eq">E = hf</div>
+          <div class="eq">N = N₀e⁻ˡᵗ</div>
+          <div class="eq">R = R₀A^(1/3)</div>
+          <p class="small">All of these appear in the 2025 booklet, with several marked as HL additions. </p>
         </div>
 
         <div class="card">
@@ -324,29 +352,14 @@
         </div>
 
         <div class="card">
-          <h2>Coverage</h2>
-          <span class="pill core">force–distance graphs</span>
-          <span class="pill core">orbital motion</span>
-          <span class="pill core">sound / interference</span>
-          <span class="pill core">electric fields</span>
-          <span class="pill core">circuits</span>
-          <span class="pill core">binding energy</span>
-          <span class="pill core">projectiles</span>
-          <span class="pill core">ideal gases</span>
-          <span class="pill hl">Rutherford scattering</span>
-          <span class="pill hl">nuclear radius</span>
-          <span class="pill hl">decay constant detail</span>
-          <span class="pill hl">discrete nuclear energy levels</span>
-          <span class="pill hl">microstates / probability</span>
-          <span class="pill hl">Doppler extension</span>
-        </div>
-
-        <div class="card">
-          <h2>Exam tips</h2>
+          <h2>Exam habits</h2>
           <div class="hint">
-            For “show that”, set up the equation clearly and substitute values.  
-            For “outline”, give the main physical reason.  
-            For “explain”, link the physics principle to the specific situation.
+            For “show that”, start from a stated principle and substitute carefully.  
+            For “explain”, use a chain: principle → equation → meaning in context.  
+            For “outline”, keep it short but causal.
+          </div>
+          <div class="danger">
+            Common weakness: students jump straight to arithmetic without first identifying the physical principle.
           </div>
         </div>
       </aside>
@@ -363,297 +376,269 @@
   <script>
     const notesBlocks = [
       {
-        id:"n1", level:"core", topic:"mechanics", title:"Force–distance graphs and work",
+        id:"n1", level:"core", topic:"mechanics", title:"Work from a force–distance graph",
         html: `
-          <p>The area under a force–distance graph represents <strong>work done</strong>.</p>
-          <p>If the object starts from rest, the work done can be equated to the change in kinetic energy:</p>
-          <div class="code"><pre>W = ΔE_k = 1/2 mv²</pre></div>
+          <p><strong>Core idea:</strong> the area under an F–d graph is the work done by the force.</p>
+          <div class="eq">W = area under graph</div>
+          <div class="eq">W = ΔE_k</div>
+          <div class="eq">ΔE_k = ½mv² - ½mu²</div>
+          <p>In the attached SL and HL Paper 2 mocks, this is used immediately with a car starting from rest, so the work found from the graph becomes <strong>½mv²</strong>. </p>
+          <div class="hint">
+            Method:
+            1. find the graph area,
+            2. identify it as work,
+            3. connect to kinetic energy,
+            4. solve for speed.
+          </div>
+          <div class="danger">
+            Do not confuse the area under an <em>acceleration–time</em> graph, which gives change in velocity, with the area under a <em>force–distance</em> graph, which gives work.
+          </div>
         `
       },
       {
-        id:"n2", level:"core", topic:"gravitation", title:"Orbital motion and gravitation",
+        id:"n2", level:"core", topic:"gravitation", title:"Orbital motion, field strength, and potential",
         html: `
-          <p>Kepler-style orbital data can be used to compare orbital radii and periods.</p>
-          <p>For bodies orbiting the same central mass:</p>
-          <div class="code"><pre>T² ∝ r³</pre></div>
-          <p>This lets you compare planets or estimate the mass of the Sun using orbital radius and period. </p>
+          <div class="eq">g = GM/r²</div>
+          <div class="eq">v_orbital = √(GM/r)</div>
+          <div class="eq">V_g = -GM/r</div>
+          <p>The data booklet lists gravitational field strength in the core section and orbital speed and gravitational potential as HL additions. :contentReference[oaicite:6]{index=6}</p>
+          <p>The attached HL paper uses the change in gravitational potential per unit mass between Earth–Sun distances to estimate an average field strength, which is a beautiful application of:</p>
+          <div class="eq">g = -ΔV_g/Δr</div>
+          <p>That is not just an algebra trick — it expresses the physical idea that field strength is the spatial rate of change of potential. :contentReference[oaicite:7]{index=7}</p>
         `
       },
       {
-        id:"n3", level:"core", topic:"waves", title:"Interference and sound",
+        id:"n3", level:"core", topic:"waves", title:"Interference, phase, and path difference",
         html: `
-          <p>Destructive interference occurs when two waves arrive out of phase by half a wavelength (or an odd multiple of half a wavelength).</p>
-          <p>For sound in air:</p>
-          <div class="code"><pre>λ = v / f</pre></div>
+          <div class="eq">λ = v/f</div>
+          <p>Destructive interference occurs when the waves arrive <strong>out of phase by π radians</strong>, equivalently with path difference:</p>
+          <div class="eq">Δx = (n + 1/2)λ</div>
+          <p>Several of the mock questions rely on students moving between:
+          frequency → wavelength → phase/path reasoning.</p>
+          <div class="hint">
+            A very common move in Paper 2:
+            compute λ first, then compare geometric path difference with λ/2, 3λ/2, ...
+          </div>
         `
       },
       {
-        id:"n4", level:"core", topic:"fields", title:"Uniform electric fields",
+        id:"n4", level:"core", topic:"fields", title:"Charged particles in electric and magnetic fields",
         html: `
-          <p>Between parallel plates:</p>
-          <div class="code"><pre>E = V / d</pre></div>
-          <p>An electron accelerates opposite to the electric field direction because it is negatively charged. In a combined electric and magnetic field, undeflected motion means the electric and magnetic forces balance. </p>
+          <div class="eq">E = V/d</div>
+          <div class="eq">F_E = qE</div>
+          <div class="eq">F_B = qvB sinθ</div>
+          <p>The attached SL and HL Paper 2 questions both use the same core setup: an electron enters a region between charged plates, then a magnetic field is added so that the electron passes undeflected. </p>
+          <p>Undeflected motion means the resultant force is zero, so:</p>
+          <div class="eq">qE = qvB</div>
+          <div class="eq">v = E/B</div>
+          <div class="eq">B = E/v</div>
+          <p>The charged-particles notes emphasize that matter may respond to gravitational, electric, and magnetic fields depending on its properties, and contrast the roles of field and force visually. </p>
+          <div class="danger">
+            Students often write “magnetic force balances electric field.”  
+            It is <strong>magnetic force</strong> that balances <strong>electric force</strong>, not field.
+          </div>
         `
       },
       {
-        id:"n5", level:"core", topic:"circuits", title:"Power and resistance",
+        id:"n5", level:"core", topic:"circuits", title:"Resistors and power reasoning",
         html: `
-          <p>Useful equations:</p>
-          <div class="code"><pre>P = IV
-P = I²R
-P = V²/R</pre></div>
-          <p>Series and parallel arrangements change current, voltage, and power distribution in predictable ways. :contentReference[oaicite:4]{index=4}</p>
+          <div class="eq">P = IV</div>
+          <div class="eq">P = I²R</div>
+          <div class="eq">P = V²/R</div>
+          <p>The papers include ranking resistance combinations and comparing resistor behavior in series and parallel. </p>
+          <p>The key reasoning is not just formula recall:</p>
+          <ul>
+            <li>in <strong>series</strong>, current is the same through each resistor</li>
+            <li>in <strong>parallel</strong>, potential difference is the same across each branch</li>
+          </ul>
+          <p>That tells you which power formula is most useful.</p>
         `
       },
       {
-        id:"n6", level:"core", topic:"nuclear", title:"Binding energy and stability",
+        id:"n6", level:"core", topic:"thermal", title:"Ideal gases and microscopic interpretation",
         html: `
-          <p>Binding energy is the energy required to completely separate the nucleons in a nucleus, or equivalently the energy released when the nucleus is assembled.</p>
-          <p>Greater binding energy per nucleon generally means greater stability. :contentReference[oaicite:5]{index=5}</p>
+          <div class="eq">pV = nRT</div>
+          <div class="eq">E_k(avg) = (3/2)k_BT</div>
+          <p>The Paper 1 and Paper 2 questions repeatedly test whether students can connect a macroscopic change to a molecular explanation. Rapid compression increases molecular speed because the piston does work on the gas during collisions. </p>
+          <p>That is more precise than saying “the gas has less space”. Less space alone does not explain the rise in average kinetic energy.</p>
         `
       },
       {
-        id:"n7", level:"core", topic:"thermal", title:"Ideal gases and kinetic theory",
+        id:"n7", level:"core", topic:"nuclear", title:"Binding energy and stability",
         html: `
-          <p>For an ideal gas:</p>
-          <div class="code"><pre>pV = nRT</pre></div>
-          <p>If a gas behaves ideally at constant temperature, then pV remains constant.</p>
+          <div class="eq">E = mc²</div>
+          <p>Binding energy is most safely described as the energy required to separate a nucleus completely into free nucleons, or equivalently the energy released when the nucleus is assembled.</p>
+          <p>Binding energy <em>per nucleon</em> is often the better comparison for stability, because it normalizes for different mass numbers.</p>
         `
       },
       {
-        id:"n8", level:"sl", topic:"mechanics", title:"SL emphasis: projectiles and collisions",
+        id:"n8", level:"core", topic:"nuclear", title:"Radioactive decay core",
         html: `
-          <p>The SL papers emphasize projectile motion, momentum, and collisions, including drawing free-body diagrams and using conservation of momentum. </p>
+          <div class="eq">N = N₀e⁻ˡᵗ</div>
+          <div class="eq">A = λN</div>
+          <div class="eq">T₁/₂ = ln2 / λ</div>
+          <p>The 2025 data booklet places full decay equations in the HL addition section of theme E, but decay ideas and nuclear changes appear widely in the mock material. :contentReference[oaicite:12]{index=12}</p>
+          <div class="hint">
+            Always distinguish:
+            <strong>N</strong> = number of undecayed nuclei,
+            <strong>A</strong> = activity,
+            <strong>λ</strong> = decay constant.
+          </div>
         `
       },
       {
-        id:"n9", level:"sl", topic:"waves", title:"SL emphasis: refraction and heating / circuits",
+        id:"n9", level:"sl", topic:"mechanics", title:"SL focus: collisions, projectiles, and pendulums",
         html: `
-          <p>The SL papers also place strong emphasis on wave behavior at boundaries, simple interference setups, ideal gases, and practical electricity questions such as heater design and lamp I–V graphs. :contentReference[oaicite:7]{index=7}</p>
+          <p>The SL material emphasizes careful free-body diagrams, inelastic collisions, pendulum period changes, and projectile motion with and without air resistance. :contentReference[oaicite:13]{index=13}</p>
+          <p>Typical reasoning patterns:</p>
+          <ul>
+            <li>momentum conserved in collisions if external impulse is negligible</li>
+            <li>kinetic energy not necessarily conserved</li>
+            <li>at the top of a projectile path, vertical velocity is zero but acceleration is still g</li>
+            <li>for a pendulum, the period depends on length and g, not bob mass</li>
+          </ul>
         `
       },
       {
-        id:"n10", level:"hl", topic:"hl_extension", title:"HL extension: Rutherford scattering",
+        id:"n10", level:"sl", topic:"fields", title:"SL focus: field direction and simple particle motion",
         html: `
-          <p>HL adds nuclear scattering ideas beyond the SL core. When alpha particles have sufficiently high energy, they probe distances comparable to the nuclear radius, so simple Rutherford scattering predictions break down. This allows an estimate of nuclear size. :contentReference[oaicite:8]{index=8}</p>
+          <p>SL questions strongly emphasize correct field directions, free-body or free-force reasoning, and simple field equations such as:</p>
+          <div class="eq">E = kQ/r²</div>
+          <div class="eq">E = V/d</div>
+          <p>Students must be careful with direction: electric field is defined by the force on a positive test charge, not on an electron. :contentReference[oaicite:14]{index=14}</p>
         `
       },
       {
-        id:"n11", level:"hl", topic:"hl_extension", title:"HL extension: microstates and probability",
+        id:"n11", level:"hl", topic:"hl_extension", title:"HL extension: rigid-body mechanics and relativity",
         html: `
-          <p>HL also adds thermodynamic-statistical reasoning. A macrostate with more possible microstates is more probable, so isolated systems tend to evolve toward configurations with more microstates. :contentReference[oaicite:9]{index=9}</p>
+          <div class="eq">I = Σmr²</div>
+          <div class="eq">τ = Iα</div>
+          <div class="eq">L = Iω</div>
+          <div class="eq">u' = (u-v)/(1-uv/c²)</div>
+          <p>The data booklet explicitly places rigid-body mechanics and special relativity in the additional HL mechanics section. :contentReference[oaicite:15]{index=15}</p>
+          <p>The attached HL Paper 1 includes moment of inertia, angular impulse units, rotational kinetic energy, and relativistic velocity addition. :contentReference[oaicite:16]{index=16}</p>
         `
       },
       {
-        id:"n12", level:"hl", topic:"hl_extension", title:"HL extension: discrete nuclear energy levels",
+        id:"n12", level:"hl", topic:"hl_extension", title:"HL extension: Rutherford scattering and nuclear radius",
         html: `
-          <p>Distinct gamma frequencies imply distinct photon energies, so the nucleus can only transition between specific allowed energy levels. That is evidence that nuclear energy levels are discrete. :contentReference[oaicite:10]{index=10}</p>
+          <div class="eq">R = R₀A^(1/3)</div>
+          <p>The HL mock explicitly asks why Rutherford scattering fails for alpha particles above a threshold energy and how that threshold can be used to estimate nuclear radius. :contentReference[oaicite:17]{index=17}</p>
+          <p>The deeper idea is that Rutherford’s model treats the interaction as Coulomb repulsion from a small charged nucleus. At very high alpha energies, the alpha particle approaches closely enough that finite nuclear size and nuclear interactions matter, so the simple model breaks down.</p>
+        `
+      },
+      {
+        id:"n13", level:"hl", topic:"hl_extension", title:"HL extension: discrete nuclear levels and gamma evidence",
+        html: `
+          <div class="eq">E = hf</div>
+          <p>If only certain gamma frequencies are observed, then only certain photon energies are emitted. That means only certain energy differences between nuclear states exist. Therefore the nuclear energy levels are discrete, not continuous. The HL mock leans on exactly this logic. :contentReference[oaicite:18]{index=18}</p>
+        `
+      },
+      {
+        id:"n14", level:"hl", topic:"hl_extension", title:"HL extension: microstates and probability",
+        html: `
+          <p>The HL paper asks students to reason statistically about why systems evolve toward macrostates with larger numbers of microstates. :contentReference[oaicite:19]{index=19}</p>
+          <p>That is not because “nature wants disorder” in a mystical sense. It is because a state with more microstates has more ways of occurring, so it is more probable.</p>
         `
       }
     ];
 
     const shortQuestions = [
       {
-        id:"sa1", level:"core", topic:"mechanics", marks:2,
-        q:"What is represented by the area under a force–distance graph?",
-        a:"The area under a force–distance graph represents the work done by the force. If the object starts from rest, this work equals the gain in kinetic energy."
+        id:"sa1", level:"core", topic:"mechanics", marks:3,
+        q:"A car starts from rest and the resultant force on it is plotted against distance. Explain fully how the graph can be used to find the final speed.",
+        a:"The area under the force–distance graph gives the work done on the car. By the work–energy principle, this work equals the change in kinetic energy. Because the car starts from rest, the initial kinetic energy is zero, so the area equals ½mv². Rearranging gives v = √(2W/m). A strong answer names the physical principle before substituting values."
       },
       {
-        id:"sa2", level:"core", topic:"mechanics", marks:3,
-        q:"A force–distance graph gives the work done on a car. Explain how this can be used to find the final speed of a car that starts from rest.",
-        a:"First calculate the area under the graph to find the work done. Then use the work–energy principle: work done equals change in kinetic energy. Since the car starts from rest, W = 1/2 mv², so the final speed can be found from v = √(2W/m)."
+        id:"sa2", level:"core", topic:"gravitation", marks:4,
+        q:"Explain how a change in gravitational potential per unit mass can be used to estimate average field strength.",
+        a:"Gravitational field strength is the rate of change of gravitational potential with distance, with a negative sign because potential decreases in the field direction. So an average field strength over a finite interval can be estimated from g ≈ -ΔV_g/Δr. If the potential difference per unit mass between two positions is known and the separation is known, the ratio gives the average field strength over that interval."
       },
       {
-        id:"sa3", level:"core", topic:"gravitation", marks:3,
-        q:"Explain how observations of planetary motion can be used to determine the mass of the Sun.",
-        a:"The orbital period and orbital radius of a planet can be measured from observations. Using circular motion and gravitation, or Kepler’s third law in Newtonian form, these values can be related to the mass of the Sun. Rearranging the equation allows the Sun’s mass to be calculated."
+        id:"sa3", level:"core", topic:"waves", marks:3,
+        q:"Explain destructive interference in terms of phase and path difference.",
+        a:"Destructive interference occurs when the waves arrive in antiphase, meaning their phase difference is π radians, 3π radians, and so on. In path terms this corresponds to a path difference of λ/2, 3λ/2, 5λ/2, etc. Then the displacement caused by one wave tends to cancel the displacement caused by the other."
       },
       {
-        id:"sa4", level:"core", topic:"waves", marks:3,
-        q:"Outline why sound at a detector may undergo destructive interference when it arrives by a direct path and a reflected path.",
-        a:"The two sound waves travel different distances, so they may arrive with a path difference equal to half a wavelength or an odd multiple of half a wavelength. In that case they are out of phase and interfere destructively, reducing the detected intensity."
+        id:"sa4", level:"core", topic:"fields", marks:4,
+        q:"An electron passes undeflected through crossed electric and magnetic fields. Explain the physics carefully.",
+        a:"For undeflected motion, the resultant force must be zero. The electric force on the electron has magnitude qE and the magnetic force has magnitude qvB when the velocity is perpendicular to the field. These two forces must be equal in magnitude and opposite in direction, so qE = qvB. The charge cancels, giving E = vB and therefore v = E/B. A high-quality answer states explicitly that it is the forces that balance, not the fields."
       },
       {
-        id:"sa5", level:"core", topic:"waves", marks:2,
-        q:"State one difference between sound waves and electromagnetic waves other than longitudinal/transverse.",
-        a:"Sound waves require a medium to travel, whereas electromagnetic waves can travel through a vacuum."
+        id:"sa5", level:"core", topic:"circuits", marks:4,
+        q:"Why does a larger resistance dissipate more power in series but less power in parallel?",
+        a:"In series, the current is the same through all resistors, so power is best written as P = I²R. Therefore the larger resistance dissipates more power. In parallel, the potential difference across each branch is the same, so power is best written as P = V²/R. Therefore the smaller resistance dissipates more power. The key is to choose the form of the power equation that matches what stays constant."
       },
       {
-        id:"sa6", level:"core", topic:"fields", marks:3,
-        q:"Explain why an electron between parallel charged plates accelerates toward the positive plate.",
-        a:"The electric field points from the positive plate to the negative plate. Because the electron has negative charge, the electric force on it acts opposite to the field direction. Therefore it accelerates toward the positive plate."
+        id:"sa6", level:"core", topic:"thermal", marks:4,
+        q:"A gas is compressed rapidly by a piston. Explain why the average molecular speed increases.",
+        a:"As the piston moves inward, gas molecules collide with it and gain energy from those collisions. This increases their average kinetic energy, and therefore their average speed increases. The best answer avoids saying merely that the molecules have less volume available, because reduced volume alone does not explain the gain in kinetic energy."
       },
       {
-        id:"sa7", level:"core", topic:"fields", marks:3,
-        q:"What condition must be satisfied for an electron to pass undeflected through crossed electric and magnetic fields?",
-        a:"The electric force and magnetic force must be equal in magnitude and opposite in direction. This gives qE = qvB, so E = vB and therefore v = E/B."
+        id:"sa7", level:"core", topic:"thermal", marks:3,
+        q:"How can you test from graph data whether a gas is behaving ideally at constant temperature?",
+        a:"For an ideal gas at constant temperature, pV should be constant. So values of p and V can be read from the graph at different points and multiplied. If the products are all approximately equal within uncertainty, that supports the conclusion that the gas is behaving ideally."
       },
       {
-        id:"sa8", level:"core", topic:"circuits", marks:3,
-        q:"Explain why power dissipation differs for two resistors in series and in parallel.",
-        a:"In series, the current through both resistors is the same, so power depends on P = I²R. The resistor with greater resistance dissipates more power. In parallel, the potential difference across each resistor is the same, so power depends on P = V²/R. The resistor with smaller resistance dissipates more power."
+        id:"sa8", level:"core", topic:"nuclear", marks:3,
+        q:"Explain why larger binding energy per nucleon implies greater nuclear stability.",
+        a:"Binding energy per nucleon measures how tightly, on average, each nucleon is bound into the nucleus. If this value is larger, more energy would be needed per nucleon to pull the nucleus apart. Therefore the nucleus is generally more stable."
       },
       {
-        id:"sa9", level:"core", topic:"nuclear", marks:3,
-        q:"What is meant by the binding energy of a nucleus?",
-        a:"The binding energy of a nucleus is the energy required to completely separate the nucleus into its constituent protons and neutrons. Equivalently, it is the energy released when the nucleus is assembled from free nucleons."
+        id:"sa9", level:"sl", topic:"mechanics", marks:4,
+        q:"In an inelastic collision, why is momentum conserved while kinetic energy is not?",
+        a:"Momentum is conserved provided the net external impulse on the system is negligible. Kinetic energy, however, can be transformed into other forms such as internal energy, sound, thermal energy, or deformation energy during the collision. Therefore the total momentum stays constant but the total kinetic energy can decrease."
       },
       {
-        id:"sa10", level:"core", topic:"nuclear", marks:3,
-        q:"Explain why a larger binding energy per nucleon generally means greater nuclear stability.",
-        a:"A larger binding energy per nucleon means the nucleons are, on average, more tightly bound together. More energy would be needed to separate them, so the nucleus is more stable."
+        id:"sa10", level:"sl", topic:"mechanics", marks:3,
+        q:"At the highest point of projectile motion, what remains true and what changes?",
+        a:"At the highest point, the vertical component of velocity is zero, but the acceleration is still downward with magnitude g because gravity continues to act. In realistic motion with air resistance, the maximum height is lower than in vacuum and the impact angle is usually steeper."
       },
       {
-        id:"sa11", level:"core", topic:"thermal", marks:3,
-        q:"Explain how a graph of pressure against volume can suggest whether a gas behaves ideally at constant temperature.",
-        a:"For an ideal gas at constant temperature, pV should remain constant. So by choosing pairs of points from the graph and checking whether the product pV stays approximately the same, we can judge whether the gas behaves ideally."
+        id:"sa11", level:"sl", topic:"nuclear", marks:3,
+        q:"Explain alpha and beta-minus decay in terms of proton and neutron numbers.",
+        a:"In alpha decay, the nucleus emits two protons and two neutrons, so the proton number decreases by 2 and the nucleon number decreases by 4. In beta-minus decay, a neutron becomes a proton, so the proton number increases by 1 while the nucleon number stays the same."
       },
       {
-        id:"sa12", level:"sl", topic:"mechanics", marks:4,
-        q:"Explain why some kinetic energy is lost in an inelastic collision such as a pellet embedding in a ball.",
-        a:"During an inelastic collision, work is done deforming the objects and overcoming internal forces. As a result, some of the initial kinetic energy is transformed into internal energy, thermal energy, and energy associated with deformation. Momentum is conserved, but kinetic energy is not."
+        id:"sa12", level:"hl", topic:"hl_extension", marks:4,
+        q:"Explain why Rutherford scattering deviates from the simple model at high alpha-particle energy.",
+        a:"Rutherford’s model assumes scattering is dominated by Coulomb repulsion from a small positively charged nucleus treated effectively as a point source. At high enough alpha-particle energy, the alpha particles can approach much more closely to the nucleus, so finite nuclear size and nuclear-force effects become important. Then the simple Coulomb-only model no longer predicts the scattering accurately."
       },
       {
-        id:"sa13", level:"sl", topic:"mechanics", marks:3,
-        q:"Describe the free-body diagram for a ball hanging at its maximum height after a collision.",
-        a:"The diagram should show two forces only: the tension acting along the string toward the pivot, and the weight acting vertically downward. These should be labeled clearly."
+        id:"sa13", level:"hl", topic:"hl_extension", marks:4,
+        q:"How can a threshold alpha-particle energy be used to estimate nuclear radius?",
+        a:"At the threshold energy, an alpha particle can just approach to the nuclear surface before turning around. Its initial kinetic energy is then equal to the electric potential energy at the distance of closest approach. By equating the initial kinetic energy to the Coulomb potential energy and solving for the distance, an estimate of the nuclear radius can be obtained."
       },
       {
-        id:"sa14", level:"sl", topic:"nuclear", marks:3,
-        q:"What is meant by isotopes?",
-        a:"Isotopes are nuclei of the same element, so they have the same number of protons, but they have different numbers of neutrons."
+        id:"sa14", level:"hl", topic:"hl_extension", marks:3,
+        q:"Explain why observed gamma frequencies imply discrete nuclear energy levels.",
+        a:"Each gamma photon has energy E = hf. If the nucleus emitted a continuous range of allowed energy differences, a continuous range of frequencies would be expected. Instead, distinct observed frequencies correspond to distinct allowed energy differences, showing that the nuclear energy levels are quantized."
       },
       {
-        id:"sa15", level:"sl", topic:"thermal", marks:3,
-        q:"Outline how kinetic theory relates observable gas properties to the motion of molecules.",
-        a:"Kinetic theory explains gas pressure as arising from molecules colliding with the walls of a container. Temperature is related to the average kinetic energy of the molecules. Macroscopic gas behavior is therefore explained in terms of the microscopic motion of particles."
+        id:"sa15", level:"hl", topic:"hl_extension", marks:4,
+        q:"Why is a macrostate with more microstates more likely?",
+        a:"A microstate is one particular detailed arrangement consistent with the overall macrostate. If a macrostate corresponds to more microstates, then there are more distinct ways for the system to realize it. Therefore that macrostate has greater probability. This statistical reasoning explains why isolated systems tend to evolve toward the macrostate with the largest number of accessible microstates."
       },
       {
-        id:"sa16", level:"hl", topic:"hl_extension", marks:4,
-        q:"Outline why Rutherford scattering breaks down for alpha particles of sufficiently high initial energy.",
-        a:"At low energies, alpha particles are mainly influenced by the Coulomb repulsion from the positively charged nucleus, so Rutherford’s model works well. At sufficiently high energies, the alpha particles can approach close enough for nuclear forces and finite nuclear size effects to matter. Then the simple point-charge Coulomb model is no longer adequate."
-      },
-      {
-        id:"sa17", level:"hl", topic:"hl_extension", marks:4,
-        q:"Explain how a threshold alpha-particle energy can be used to estimate the nuclear radius.",
-        a:"If an alpha particle with the threshold energy just reaches the distance of closest approach corresponding to the nuclear surface, its initial kinetic energy is converted into electrostatic potential energy at that point. By equating the initial kinetic energy to the electrostatic potential energy, the distance of closest approach can be estimated. This distance gives an estimate of the nuclear radius."
-      },
-      {
-        id:"sa18", level:"hl", topic:"hl_extension", marks:3,
-        q:"Explain how observed gamma frequencies provide evidence that nuclear energy levels are discrete.",
-        a:"Each emitted gamma photon has energy E = hf. If only certain frequencies are observed, then only certain photon energies are emitted. That means only certain energy differences between nuclear states are allowed, so the nuclear energy levels must be discrete rather than continuous."
-      },
-      {
-        id:"sa19", level:"hl", topic:"hl_extension", marks:4,
-        q:"Explain why an isolated system is more likely to evolve from a configuration with fewer microstates to one with more microstates.",
-        a:"A macrostate with more microstates can be realized in more distinct ways, so it has greater probability. Therefore, for an isolated system, evolution toward the macrostate with more microstates is statistically more likely than evolution toward one with fewer microstates."
-      },
-      {
-        id:"sa20", level:"hl", topic:"waves", marks:3,
-        q:"A detector hears a lower frequency than the source emits. State the detector’s direction of motion and explain briefly.",
-        a:"The detector is moving away from the source. For the Doppler effect, motion away increases the spacing of arriving wavefronts and reduces the detected frequency."
+        id:"sa16", level:"hl", topic:"hl_extension", marks:3,
+        q:"Explain the relationship between N, A, λ, and half-life in radioactive decay.",
+        a:"The number of undecayed nuclei changes as N = N₀e⁻ˡᵗ. Activity is the decay rate, so A = λN, which means activity falls exponentially in the same way as N. The half-life is the time for N or A to halve, and it is related to the decay constant by T₁/₂ = ln2 / λ."
       }
     ];
 
     const mcqQuestions = [
-      {
-        id:"m1", level:"core", topic:"mechanics",
-        q:"The area under a force–distance graph represents:",
-        options:["momentum","work done","power","impulse"],
-        correct:1,
-        explanation:"The area under an F–d graph equals work done."
-      },
-      {
-        id:"m2", level:"core", topic:"gravitation",
-        q:"For planets orbiting the same star, which relation applies?",
-        options:["T ∝ r²","T² ∝ r³","T ∝ 1/r","T² ∝ 1/r³"],
-        correct:1,
-        explanation:"Kepler’s third law for the same central mass gives T² ∝ r³."
-      },
-      {
-        id:"m3", level:"core", topic:"waves",
-        q:"Destructive interference occurs when the path difference is:",
-        options:["0","one wavelength","half a wavelength","two wavelengths"],
-        correct:2,
-        explanation:"A path difference of λ/2 gives destructive interference."
-      },
-      {
-        id:"m4", level:"core", topic:"fields",
-        q:"An electron in a uniform electric field accelerates:",
-        options:["in the direction of the field","opposite to the field","parallel to both plates only","not at all"],
-        correct:1,
-        explanation:"Because the electron is negatively charged, its force is opposite to the field direction."
-      },
-      {
-        id:"m5", level:"core", topic:"fields",
-        q:"For undeflected motion in crossed electric and magnetic fields:",
-        options:["E = B/v","E = vB","v = EB","B = Ev"],
-        correct:1,
-        explanation:"Balancing qE and qvB gives E = vB."
-      },
-      {
-        id:"m6", level:"core", topic:"circuits",
-        q:"For two resistors in series, the one with greater power dissipation has:",
-        options:["smaller resistance","greater resistance","same resistance","zero current"],
-        correct:1,
-        explanation:"In series the current is the same, so P = I²R."
-      },
-      {
-        id:"m7", level:"core", topic:"nuclear",
-        q:"Binding energy is:",
-        options:["the energy needed to ionize an atom","the energy required to separate all nucleons","the energy of a gamma photon only","the mass of the nucleus"],
-        correct:1,
-        explanation:"Binding energy is the energy needed to separate the nucleus into nucleons."
-      },
-      {
-        id:"m8", level:"core", topic:"thermal",
-        q:"If a gas behaves ideally at constant temperature, then:",
-        options:["p + V is constant","pV is constant","p/V is constant","p = V"],
-        correct:1,
-        explanation:"For an ideal gas at constant temperature, pV = constant."
-      },
-      {
-        id:"m9", level:"sl", topic:"mechanics",
-        q:"In an inelastic collision, which quantity is always conserved?",
-        options:["kinetic energy","temperature","momentum","power"],
-        correct:2,
-        explanation:"Momentum is conserved in collisions if external forces are negligible."
-      },
-      {
-        id:"m10", level:"sl", topic:"nuclear",
-        q:"Two isotopes of the same element have the same number of:",
-        options:["neutrons","protons","nucleons","electrons in the nucleus"],
-        correct:1,
-        explanation:"Isotopes have the same number of protons."
-      },
-      {
-        id:"m11", level:"hl", topic:"hl_extension",
-        q:"Rutherford scattering deviates at high alpha energy because:",
-        options:["the nucleus stops being charged","the finite size of the nucleus becomes important","electrons disappear","gravity dominates"],
-        correct:1,
-        explanation:"At high enough energy, alpha particles probe distances where nuclear size and strong-force effects matter."
-      },
-      {
-        id:"m12", level:"hl", topic:"hl_extension",
-        q:"Discrete gamma frequencies imply:",
-        options:["continuous nuclear energy levels","discrete nuclear energy levels","no nuclear transitions","constant half-life"],
-        correct:1,
-        explanation:"Specific photon frequencies correspond to specific allowed energy differences."
-      },
-      {
-        id:"m13", level:"hl", topic:"hl_extension",
-        q:"A macrostate with more microstates is:",
-        options:["less probable","more probable","impossible","always lower in total energy"],
-        correct:1,
-        explanation:"More microstates means more possible arrangements, so greater probability."
-      },
-      {
-        id:"m14", level:"hl", topic:"waves",
-        q:"A detector hears a lower frequency from a stationary loudspeaker. The detector is moving:",
-        options:["toward the source","away from the source","at right angles to the source","in a circle only"],
-        correct:1,
-        explanation:"Moving away reduces the detected frequency."
-      }
+      { id:"m1", level:"core", topic:"mechanics", q:"The area under a force–distance graph gives:", options:["momentum","work done","impulse","power"], correct:1, explanation:"Work done is the area under an F–d graph." },
+      { id:"m2", level:"core", topic:"thermal", q:"When a gas is rapidly compressed, the molecules speed up mainly because they:", options:["have less space","gain energy from piston collisions","become lighter","stop colliding"], correct:1, explanation:"The piston does work on the gas through molecular collisions." },
+      { id:"m3", level:"core", topic:"fields", q:"For a charged particle to pass undeflected through crossed E and B fields:", options:["E = qB","qE = qvB","E = qv","B = E/q"], correct:1, explanation:"Balancing electric and magnetic forces gives qE = qvB." },
+      { id:"m4", level:"core", topic:"circuits", q:"In series, which resistor dissipates more power?", options:["the smaller resistance","the larger resistance","both the same","cannot be known"], correct:1, explanation:"Current is the same in series, so P = I²R." },
+      { id:"m5", level:"core", topic:"gravitation", q:"For bodies orbiting the same central mass:", options:["T ∝ r²","T² ∝ r³","T² ∝ r","T ∝ 1/r"], correct:1, explanation:"Kepler/Newton form: T² ∝ r³." },
+      { id:"m6", level:"core", topic:"nuclear", q:"Binding energy is:", options:["energy to ionize an atom","energy needed to separate all nucleons","energy of emitted beta only","rest energy"], correct:1, explanation:"Binding energy is the energy needed to completely separate the nucleus." },
+      { id:"m7", level:"sl", topic:"mechanics", q:"In an inelastic collision, which quantity is always conserved?", options:["kinetic energy","momentum","power","temperature"], correct:1, explanation:"Momentum is conserved if external impulse is negligible." },
+      { id:"m8", level:"sl", topic:"nuclear", q:"Beta-minus decay changes a neutron into a:", options:["proton","proton and electron in nucleus only","proton, with proton number increasing by 1","alpha particle"], correct:2, explanation:"In beta-minus decay, a neutron becomes a proton, so Z increases by 1." },
+      { id:"m9", level:"hl", topic:"hl_extension", q:"Rutherford scattering breaks down at high alpha energy because:", options:["the nucleus loses charge","finite nuclear size / nuclear effects matter","gravity dominates","electrons absorb all alpha particles"], correct:1, explanation:"At close approach, the simple Coulomb-only model is no longer sufficient." },
+      { id:"m10", level:"hl", topic:"hl_extension", q:"Distinct gamma frequencies imply:", options:["continuous nuclear energies","discrete nuclear levels","constant activity","infinite half-life"], correct:1, explanation:"Specific frequencies correspond to specific allowed energy differences." },
+      { id:"m11", level:"hl", topic:"hl_extension", q:"A macrostate with more microstates is:", options:["less probable","more probable","impossible","always lower in energy"], correct:1, explanation:"More microstates means more ways for the macrostate to occur." },
+      { id:"m12", level:"hl", topic:"hl_extension", q:"The relation between half-life and decay constant is:", options:["T₁/₂ = λ/ln2","T₁/₂ = ln2 / λ","T₁/₂ = λln2","T₁/₂ = 2λ"], correct:1, explanation:"Half-life is inversely proportional to λ." }
     ];
 
     let mode = "notes";
@@ -709,12 +694,10 @@ P = V²/R</pre></div>
         data.forEach(n => {
           const div = document.createElement("div");
           div.className = "question-card";
+          const badgeClass = n.level === "core" ? "core" : n.level === "sl" ? "sl" : "hl";
+          const badgeText = n.level === "core" ? "Core / SL+HL" : n.level.toUpperCase();
           div.innerHTML = `
-            <div>
-              <span class="pill ${n.level === 'core' ? 'core' : n.level === 'sl' ? 'sl' : 'hl'}">
-                ${n.level === 'core' ? 'Core / SL+HL' : n.level.toUpperCase()}
-              </span>
-            </div>
+            <div><span class="pill ${badgeClass}">${badgeText}</span></div>
             <h3>${escapeHtml(n.title)}</h3>
             ${n.html}
           `;
@@ -845,6 +828,8 @@ P = V²/R</pre></div>
       document.getElementById("mcqAnswered").textContent = mcqAnswered;
       document.getElementById("mcqCorrect").textContent = mcqCorrect;
       document.getElementById("answersOpened").textContent = openedAnswers.size;
+      document.getElementById("questionsVisible").textContent =
+        document.querySelectorAll(".question-card").length;
     }
 
     function escapeHtml(str){
